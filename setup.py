@@ -8,6 +8,6 @@ setup(
     packages=find_packages(),
     install_requires=[
         'redis',
-        'geohasher',
+        'geohasher==0.1dev',
     ],
 )
