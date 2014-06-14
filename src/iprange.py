@@ -30,6 +30,7 @@ from city import City
 from zipcode import ZIPCode
 from geohasher import hasher
 import struct
+import redis
 
 class IPRange(object):
 
@@ -109,12 +110,8 @@ class IPRange(object):
         return ZIPCode.load('ZIPCode:%s' % range.zipcode, redisConn)
 
 
-
-
-
-
     @staticmethod
-    def getCity(ip, redisConn):
+    def getCity(ip, redisConn=None):
         """
         Get location object by resolving an IP address
         @param ip IPv4 address string (e.g. 127.0.0.1)
@@ -122,11 +119,12 @@ class IPRange(object):
         @return a Location object if we can resolve this ip, else None
         """
 
+        if not redisConn:
+            redisConn = redis.Redis()
+
         range = IPRange.get(ip, redisConn)
         if not range:
             return None
-
-        
 
         #load a location by the
         return City.getByGeohash(hasher.encode(range.lat, range.lon), redisConn)

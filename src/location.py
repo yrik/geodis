@@ -27,6 +27,7 @@
 from countries import countries
 from geohasher import hasher
 import math
+import redis
 
 
 class Location(object):
@@ -91,7 +92,10 @@ class Location(object):
 
 
     @classmethod
-    def getByLatLon(cls, lat, lon, redisConn):
+    def getByLatLon(cls, lat, lon, redisConn=None):
+
+        if not redisConn:
+            redisConn = redis.Redis()
 
         geoKey = hasher.encode(lat, lon)
         
