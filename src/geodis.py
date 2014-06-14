@@ -89,7 +89,7 @@ def resolveCoords(lat, lon):
     print loc
 
 
-if __name__ == "__main__":
+def main():
     
     logging.basicConfig(
                 level = logging.INFO,
@@ -153,3 +153,7 @@ if __name__ == "__main__":
 
     print "Success!"
     sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
